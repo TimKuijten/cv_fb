@@ -7,15 +7,14 @@
     --card:#FFFFFF;
     --accent:#0A212E;  /* acentos también en el color principal */
     --muted:#6b7280;
-    --shadow: 0 18px 45px rgba(10,33,46,.12);
-    --radius: 18px;
+    --shadow: 0 12px 32px rgba(10,33,46,.1);
+    --radius: 12px;
   }
   .kcvf *{box-sizing:border-box}
   .kcvf{
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     color:var(--ink);
-    background: radial-gradient(900px 500px at 120% -20%, rgba(10,33,46,.06), transparent 50%),
-                var(--bg);
+    background: var(--bg);
   }
   .kcvf a{color:var(--accent);text-decoration:none}
   .kcvf a:hover{text-decoration:underline}
@@ -41,12 +40,12 @@
     display:inline-flex;align-items:center;gap:8px;background:rgba(10,33,46,.08);color:#0A212E;
     padding:8px 12px;border-radius:12px;font-weight:600;font-size:.95rem
   }
-  .kcvf-hero img{width:100%;height:auto;border-radius:14px;box-shadow: var(--shadow)}
+  .kcvf-hero img{width:100%;height:auto;border-radius:var(--radius);box-shadow: var(--shadow)}
 
   /* GRID DE VALOR */
   .kcvf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
   .kcvf-card{
-    background:var(--card);border:1px solid #e9eef5;border-radius:18px;padding:20px;
+    background:var(--card);border:1px solid #e9eef5;border-radius:var(--radius);padding:20px;
     box-shadow:0 6px 18px rgba(10,33,46,.06)
   }
   .kcvf-card h3{margin:.2rem 0 .4rem; font-size:1.05rem}
@@ -61,7 +60,7 @@
   .kcvf-steps{margin-top:42px;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
   .kcvf-steps ol{counter-reset: step; list-style:none; padding:0; margin:0}
   .kcvf-steps li{
-    counter-increment: step; background:#fff;border:1px solid #e9eef5;border-radius:16px;
+    counter-increment: step; background:#fff;border:1px solid #e9eef5;border-radius:var(--radius);
     padding:16px 16px 16px 58px; position:relative; margin-bottom:12px; box-shadow:0 8px 20px rgba(10,33,46,.05)
   }
   .kcvf-steps li:before{
@@ -70,7 +69,7 @@
     font-weight:700
   }
   .kcvf-steps p{margin:.2rem 0; color:var(--ink-2)}
-  .kcvf-steps .illus img{width:100%; border-radius:14px; box-shadow: var(--shadow)}
+  .kcvf-steps .illus img{width:100%; border-radius:var(--radius); box-shadow: var(--shadow)}
 
   /* BLOQUE FORMULARIO */
   .kcvf-formwrap{
@@ -85,7 +84,7 @@
   /* FAQ */
   .kcvf-faq{margin-top:42px; display:grid; grid-template-columns:repeat(2,1fr); gap:18px}
   .kcvf-faq .q{
-    background:#fff;border:1px solid #e9eef5;border-radius:14px;padding:18px;box-shadow:0 10px 18px rgba(10,33,46,.05)
+    background:#fff;border:1px solid #e9eef5;border-radius:var(--radius);padding:18px;box-shadow:0 10px 18px rgba(10,33,46,.05)
   }
   .kcvf-faq h4{margin:.2rem 0 .3rem}
 
@@ -127,8 +126,8 @@
       </div>
 
       <!-- IMAGEN HERO (sustituye la URL por la tuya) -->
-      <img src="https://kovacictalent.com/wp-content/uploads/2025/08/file_000000006804620a842b0a3440abe739.png"
-           alt="Ilustración: Generador de feedback de CV en español">
+      <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=900&q=80"
+           alt="Profesionales ejecutivos revisando un CV">
     </header>
 
     <!-- GRID DE VALOR -->
@@ -177,8 +176,8 @@
       </div>
       <div class="illus">
         <!-- Ilustración alternativa del mismo estilo (cambia la URL) -->
-        <img src="https://kovacictalent.com/wp-content/uploads/2025/08/laptop_cv_gen.png"
-             alt="Ilustración del generador de feedback de CV: laptop y globo de comentarios">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80"
+             alt="Laptop abierta mostrando documento profesional">
       </div>
     </section>
 
