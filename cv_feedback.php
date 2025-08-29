@@ -173,16 +173,19 @@ class Kovacic_CV_Feedback_ES {
     public function assets() {
         // Estilos UI
         $css = "
-        .kcvf-wrapper{max-width:720px;margin:0 auto;background:#fff;border-radius:12px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
-        .kcvf-wrapper h2{font-size:28px;line-height:1.2;margin:0 0 14px;color:#0A212E}
+        .kcvf-wrapper{max-width:720px;margin:0 auto;background:#00563B;border-radius:12px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+        .kcvf-wrapper h2{font-size:28px;line-height:1.2;margin:0 0 14px;color:#fff}
         .kcvf-field{margin-bottom:16px}
-        .kcvf-field label{display:block;font-weight:600;margin-bottom:6px}
+        .kcvf-field label{display:block;font-weight:600;margin-bottom:6px;color:#fff}
         .kcvf-input, .kcvf-select, .kcvf-textarea{width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:10px;font-size:15px}
         .kcvf-select{height:44px}
-        .kcvf-consent{display:flex;gap:10px;align-items:flex-start}
+        .kcvf-consent{display:flex;gap:10px;align-items:flex-start;color:#fff}
         .kcvf-consent input{margin-top:3px}
-        .kcvf-btn{background:#0A212E;color:#fff;border:none;padding:14px 18px;border-radius:12px;cursor:pointer;font-weight:600}
+        .kcvf-btn{background:#003d2e;color:#fff;border:none;padding:14px 18px;border-radius:12px;cursor:pointer;font-weight:600}
         .kcvf-btn:hover{opacity:.95}
+        .kcvf-photos{display:flex;gap:12px;margin-bottom:16px}
+        .kcvf-photos img{width:100%;border-radius:10px;object-fit:cover}
+        @media(min-width:600px){.kcvf-photos img{width:50%}}
         .kcvf-alert{background:#f6ffed;border:1px solid #b7eb8f;padding:12px;border-radius:10px;margin-bottom:16px}
         .kcvf-error{background:#fff1f0;border:1px solid #ffa39e;padding:12px;border-radius:10px;margin-bottom:16px}
         .kcvf-feedback{white-space:normal;border:1px dashed #e5e7eb;border-radius:10px;padding:14px}
@@ -359,6 +362,10 @@ JS;
         $recaptcha_on = get_option(self::OPT_RECAPTCHA_ENABLE) === '1';
         ?>
         <div class="kcvf-wrapper">
+            <div class="kcvf-photos">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Profesionales ejecutivos">
+                <img src="https://images.unsplash.com/photo-1573166364524-70a19e99d104?auto=format&fit=crop&w=800&q=80" alt="Reunión ejecutiva">
+            </div>
             <h2>Envía tu CV para feedback</h2>
             <?php if (!empty($errors)): ?>
                 <div class="kcvf-error"><strong>Por favor corrige:</strong><br><?php echo implode('<br>', array_map('esc_html', $errors)); ?></div>
