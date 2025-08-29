@@ -3,12 +3,12 @@
     --brand:#0A212E;   /* color principal */
     --ink:#0A212E;
     --ink-2:#294957;
-    --bg:#F6F9FC;
+    --bg:#B0E0E6;
     --card:#FFFFFF;
     --accent:#0A212E;  /* acentos también en el color principal */
     --muted:#6b7280;
     --shadow: 0 12px 32px rgba(10,33,46,.1);
-    --radius: 12px;
+    --radius: 8px;
   }
   .kcvf *{box-sizing:border-box}
   .kcvf{
@@ -99,6 +99,15 @@
 <section class="kcvf">
   <div class="kcvf-container">
 
+    <!-- REGISTRO INICIAL -->
+    <section class="kcvf-formwrap" style="margin-top:0">
+      <h3>Registra tu CV para futuras oportunidades</h3>
+      <p>Sube tu CV para que podamos contactarte y mantenerte informado.</p>
+      <div class="kcvf-shortcode">
+        <strong>[kovacic_cv_register]</strong>
+      </div>
+    </section>
+
     <!-- HERO -->
     <header class="kcvf-hero">
       <div>
@@ -126,8 +135,8 @@
       </div>
 
       <!-- IMAGEN HERO (sustituye la URL por la tuya) -->
-      <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=900&q=80"
-           alt="Profesionales ejecutivos revisando un CV">
+      <img src="https://images.unsplash.com/photo-1581090700227-3b5c702d1a94?auto=format&fit=crop&w=900&q=80"
+           alt="Reclutadores profesionales analizando un CV">
     </header>
 
     <!-- GRID DE VALOR -->
@@ -176,8 +185,8 @@
       </div>
       <div class="illus">
         <!-- Ilustración alternativa del mismo estilo (cambia la URL) -->
-        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80"
-             alt="Laptop abierta mostrando documento profesional">
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80"
+             alt="Ejecutivo revisando un currículum en la oficina">
       </div>
     </section>
 

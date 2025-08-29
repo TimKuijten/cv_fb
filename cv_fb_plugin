@@ -28,6 +28,7 @@ class Kovacic_CV_Feedback_ES {
         add_action('admin_init', [$this, 'register_settings']);
         add_action('admin_notices', [$this, 'admin_notices_tools']);
         add_shortcode('kovacic_cv_submit', [$this, 'shortcode']);
+        add_shortcode('kovacic_cv_register', [$this, 'shortcode_register']);
         add_action('wp_enqueue_scripts', [$this, 'assets']);
         add_action('add_meta_boxes', [$this, 'metabox']);
         add_action('save_post', [$this, 'save_meta']);
@@ -332,10 +333,27 @@ JS;
     }
 
     public function shortcode() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['kcvf_es_nonce'])) {
-            return $this->handle_submission();
+        if (
+            $_SERVER['REQUEST_METHOD'] === 'POST'
+            && isset($_POST['kcvf_es_nonce'])
+            && isset($_POST['kcvf_mode'])
+            && $_POST['kcvf_mode'] === 'submit'
+        ) {
+            return $this->handle_submission(false);
         }
         return $this->render_form();
+    }
+
+    public function shortcode_register() {
+        if (
+            $_SERVER['REQUEST_METHOD'] === 'POST'
+            && isset($_POST['kcvf_es_nonce'])
+            && isset($_POST['kcvf_mode'])
+            && $_POST['kcvf_mode'] === 'register'
+        ) {
+            return $this->handle_submission(true);
+        }
+        return $this->render_form([], [], true);
     }
 
     /** Normaliza fences/comillas raras del modelo */
@@ -353,19 +371,22 @@ JS;
         return preg_replace('/<\/?strong>/', '', (string)$html);
     }
 
-    private function render_form($errors = [], $old = []) {
+    private function render_form($errors = [], $old = [], $register_only = false) {
         ob_start();
         $gdpr_text = get_option(self::OPT_GDPR_TEXT);
         $recaptcha_on = get_option(self::OPT_RECAPTCHA_ENABLE) === '1';
+        $title = $register_only ? 'Registra tu CV' : 'Envía tu CV para feedback';
+        $btn   = $register_only ? 'Subir CV' : 'Enviar y obtener feedback';
         ?>
         <div class="kcvf-wrapper">
-            <h2>Envía tu CV para feedback</h2>
+            <h2><?php echo esc_html($title); ?></h2>
             <?php if (!empty($errors)): ?>
                 <div class="kcvf-error"><strong>Por favor corrige:</strong><br><?php echo implode('<br>', array_map('esc_html', $errors)); ?></div>
             <?php endif; ?>
 
             <form method="post" enctype="multipart/form-data" class="kcvf-form">
                 <?php wp_nonce_field('kcvf_es_submit', 'kcvf_es_nonce'); ?>
+                <input type="hidden" name="kcvf_mode" value="<?php echo $register_only ? 'register' : 'submit'; ?>">
 
                 <div class="kcvf-field">
                     <label for="kcvf_email">Correo electrónico</label>
@@ -417,16 +438,16 @@ JS;
                     <input type="hidden" name="kcvf_recaptcha_token" value="">
                 <?php endif; ?>
 
-                <button class="kcvf-btn" type="submit">Enviar y obtener feedback</button>
+                <button class="kcvf-btn" type="submit"><?php echo esc_html($btn); ?></button>
             </form>
         </div>
         <?php
         return ob_get_clean();
     }
 
-    private function handle_submission() {
+    private function handle_submission($register_only = false) {
         if (!wp_verify_nonce($_POST['kcvf_es_nonce'], 'kcvf_es_submit')) {
-            return $this->render_form(['Token de formulario inválido. Recarga la página e inténtalo de nuevo.']);
+            return $this->render_form(['Token de formulario inválido. Recarga la página e inténtalo de nuevo.'], [], $register_only);
         }
 
         $errors = [];
@@ -547,7 +568,7 @@ Por favor, sube tu CV en DOCX o en PDF con texto seleccionable (OCR). También p
         }
 
         if (!empty($errors)) {
-            return $this->render_form($errors, ['email' => $email, 'role' => $role]);
+            return $this->render_form($errors, ['email' => $email, 'role' => $role], $register_only);
         }
 
         // Guardar envío
@@ -569,8 +590,10 @@ Por favor, sube tu CV en DOCX o en PDF con texto seleccionable (OCR). También p
             if ($converted_docx) add_post_meta($post_id, '_kcvf_converted_docx', $converted_docx);
         }
 
-        $thankyou = get_option(self::OPT_THANKYOU_TEXT);
-        $instant = get_option(self::OPT_AUTO_FEEDBACK) === '1';
+        $thankyou = $register_only
+            ? '¡Gracias! Hemos recibido tu CV. Te mantendremos informado.'
+            : get_option(self::OPT_THANKYOU_TEXT);
+        $instant = !$register_only && get_option(self::OPT_AUTO_FEEDBACK) === '1';
         $feedback_block = '';
 
         if ($instant) {
@@ -622,11 +645,19 @@ Por favor, sube tu CV en DOCX o en PDF con texto seleccionable (OCR). También p
             }
 
         } else {
-            // Solo aviso interno
             $notify = get_option(self::OPT_NOTIFY_EMAIL);
             if ($notify && is_email($notify)) {
-                $body_admin = "Nuevo envío de CV: {$email}\nRol objetivo: {$role}\nSector: {$sector}\nNotas: {$notes}\nArchivo: {$stored_path}\n(El feedback instantáneo está desactivado.)";
-                wp_mail($notify, 'Nuevo envío de CV', $body_admin);
+                $subject = $register_only ? 'Nuevo registro de CV' : 'Nuevo envío de CV';
+                $body_admin = "Nuevo envío de CV: {$email}\nRol objetivo: {$role}\nSector: {$sector}\nNotas: {$notes}\nArchivo:{$stored_path}\n";
+                if (!$register_only) {
+                    $body_admin .= "(El feedback instantáneo está desactivado.)";
+                }
+                wp_mail($notify, $subject, $body_admin);
+            }
+            if ($register_only && is_email($email)) {
+                $headers = ['Content-Type: text/html; charset=UTF-8'];
+                $body = '<p>Hola,</p><p>Gracias por compartir tu CV. Te contactaremos para futuras oportunidades.</p><p>— Kovacic Executive Talent Research</p>';
+                wp_mail($email, 'CV recibido', $body, $headers);
             }
             $feedback_block = '<div class="kcvf-alert"><strong>' . esc_html($thankyou) . '</strong></div>';
 
