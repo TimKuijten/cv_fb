@@ -209,7 +209,7 @@
     <section class="kcvf-formwrap" id="enviar-cv">
       <h3>Envía tu CV para feedback</h3>
       <p>Sube tu documento y recibe recomendaciones en pocos minutos.</p>
-      <div class="kcvf-shortcode">
+      <div class="kcvf-shortcode" style="display:block">
         <strong>[kovacic_cv_submit]</strong>
       </div>
     </section>
