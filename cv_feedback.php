@@ -3,7 +3,7 @@
     --brand:#0A212E;   /* color principal */
     --ink:#0A212E;
     --ink-2:#294957;
-    --bg:#B0E0E6;
+    --bg:#0A212E;
     --card:#FFFFFF;
     --accent:#0A212E;  /* acentos también en el color principal */
     --muted:#6b7280;
@@ -19,6 +19,14 @@
   .kcvf a{color:var(--accent);text-decoration:none}
   .kcvf a:hover{text-decoration:underline}
   .kcvf-container{max-width:1100px;margin:0 auto;padding: clamp(20px, 4vw, 48px);}
+
+  /* Toggle button for folded form */
+  details.kcvf-fold summary{
+    color:#fff;
+    cursor:pointer;
+    font-weight:600;
+    margin-bottom:12px;
+  }
 
   /* HERO */
   .kcvf-hero{
@@ -100,13 +108,16 @@
   <div class="kcvf-container">
 
     <!-- REGISTRO INICIAL -->
-    <section class="kcvf-formwrap" style="margin-top:0">
-      <h3>Registra tu CV para futuras oportunidades</h3>
-      <p>Sube tu CV para que podamos contactarte y mantenerte informado.</p>
-      <div class="kcvf-shortcode">
-        <strong>[kovacic_cv_register]</strong>
+    <details class="kcvf-fold">
+      <summary>Submit your CV here</summary>
+      <div class="kcvf-formwrap" style="margin-top:0">
+        <h3>Registra tu CV para futuras oportunidades</h3>
+        <p>Sube tu CV para que podamos contactarte y mantenerte informado.</p>
+        <div class="kcvf-shortcode">
+          <strong>[kovacic_cv_register]</strong>
+        </div>
       </div>
-    </section>
+    </details>
 
     <!-- HERO -->
     <header class="kcvf-hero">
@@ -167,7 +178,7 @@
     <!-- CÓMO FUNCIONA -->
     <section class="kcvf-steps">
       <div>
-        <h2>¿Cómo funciona?</h2>
+        <h2 style="color:#fff">Como funciona?</h2>
         <ol>
           <li>
             <strong>Sube tu CV y cuéntanos tu objetivo.</strong>
