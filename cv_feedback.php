@@ -3,7 +3,7 @@
     --brand:#0A212E;   /* color principal */
     --ink:#0A212E;
     --ink-2:#294957;
-    --bg:#B0E0E6;
+    --bg:#E6EEF2;
     --card:#FFFFFF;
     --accent:#0A212E;  /* acentos también en el color principal */
     --muted:#6b7280;
@@ -78,7 +78,8 @@
   }
   .kcvf-formwrap h3{margin:0 0 8px}
   .kcvf-formwrap p{color:var(--muted)}
-  .kcvf-shortcode{margin-top:14px; padding:16px; border-radius:12px; background:#f4f6f8; border:1px dashed rgba(10,33,46,.25)}
+  .kcvf-toggle{margin-top:10px;padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer}
+  .kcvf-shortcode{display:none;margin-top:14px; padding:16px; border-radius:12px; background:#f4f6f8; border:1px dashed rgba(10,33,46,.25)}
   .kcvf-shortcode strong{color:var(--ink)}
 
   /* FAQ */
@@ -103,7 +104,8 @@
     <section class="kcvf-formwrap" style="margin-top:0">
       <h3>Registra tu CV para futuras oportunidades</h3>
       <p>Sube tu CV para que podamos contactarte y mantenerte informado.</p>
-      <div class="kcvf-shortcode">
+      <button class="kcvf-toggle" id="toggle-cv-form" aria-expanded="false">Registrar CV</button>
+      <div class="kcvf-shortcode" id="cv-form">
         <strong>[kovacic_cv_register]</strong>
       </div>
     </section>
@@ -216,3 +218,17 @@
 
   </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const btn = document.getElementById('toggle-cv-form');
+  const form = document.getElementById('cv-form');
+  if(btn && form){
+    btn.addEventListener('click', function(){
+      const open = form.style.display === 'block';
+      form.style.display = open ? 'none' : 'block';
+      btn.setAttribute('aria-expanded', String(!open));
+      btn.textContent = open ? 'Registrar CV' : 'Ocultar formulario';
+    });
+  }
+});
+</script>
